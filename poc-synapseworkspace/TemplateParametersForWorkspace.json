@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "poc-synapseworkspace"
+		},
+		"poc-synapseworkspace-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:poc-synapseworkspace.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"source_csv_accountKey": {
+			"value": ""
+		},
+		"poc-synapseworkspace-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://poctorageaccount.dfs.core.windows.net"
+		},
+		"source_csv_properties_typeProperties_url": {
+			"value": "https://poctorageaccount.dfs.core.windows.net/"
+		}
+	}
+}
