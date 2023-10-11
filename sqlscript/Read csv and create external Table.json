@@ -1,0 +1,17 @@
+{
+	"name": "Read csv and create external Table",
+	"properties": {
+		"content": {
+			"query": "IF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n\tCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n\tWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t       FORMAT_OPTIONS (\n\t\t\t FIELD_TERMINATOR = ',',\n\t\t\t USE_TYPE_DEFAULT = FALSE\n\t\t\t))\nGO\n\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'demo_poctorageaccount_dfs_core_windows_net') \n\tCREATE EXTERNAL DATA SOURCE [demo_poctorageaccount_dfs_core_windows_net] \n\tWITH (\n\t\tLOCATION = 'abfss://demo@poctorageaccount.dfs.core.windows.net', \n\t\tTYPE = HADOOP \n\t)\nGO\n\nCREATE EXTERNAL TABLE dbo.CountryRegionCurrency2 (\n\t[C1] nvarchar(4000),\n\t[C2] nvarchar(4000),\n\t[C3] nvarchar(4000)\n\t)\n\tWITH (\n\tLOCATION = 'csv/CountryRegionCurrency.csv',\n\tDATA_SOURCE = [demo_poctorageaccount_dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseDelimitedTextFormat]\n\t)\nGO\n\n\nSELECT TOP 100 * FROM dbo.CountryRegionCurrency2\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "dedicated_pool",
+				"poolName": "dedicated_pool"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}
